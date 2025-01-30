@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "codeseek.helloWorld",
-        "title": "Hello World"
+        "command": "*",
+        "title": "CodeSeek Init"
       }
     ]
   },
