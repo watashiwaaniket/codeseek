@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "*",
-        "title": "CodeSeek Init"
+        "command": "codeSeek.openWebview",
+        "title": "CodeSeek"
       }
     ]
   },
