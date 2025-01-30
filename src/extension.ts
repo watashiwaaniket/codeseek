@@ -1,5 +1,12 @@
 import * as vscode from 'vscode';
 import ollama from 'ollama';
+import markdownit from 'markdown-it';
+
+const md = markdownit({
+    html: true,
+    linkify: true,
+    typographer: true
+  });
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('codeSeek up and running.');
@@ -78,7 +85,7 @@ function getWebviewContent(): string {
                     font-family: Arial, sans-serif;
                     margin: 0;
                     padding: 0;
-                    width: 400px;
+                    width: 480px;
                     height: 100vh;
                     background-color: #1e1e1e;
                     color: #ffffff;
@@ -92,28 +99,29 @@ function getWebviewContent(): string {
                 }
                 .message {
                     margin-bottom: 10px;
-                    padding: 10px;
-                    border-radius: 5px;
-                    max-width: 80%;
+                    padding: 6px;
+                    border-radius: 10px;
+                    max-width: 90%;
                 }
                 .user {
-                    background-color: #4CAF50;
-                    align-self: flex-end;
+                    background-color:#0d1117;
+                    align-self: flex-top;
+                    border: green;
                 }
                 .ai {
-                    background-color: #333;
-                    align-self: flex-start;
+                    background-color: #0d1117;
+                    align-self: flex-end;
                 }
                 #input-container {
                     display: flex;
-                    padding: 10px;
+                    padding: 6px;
                     background-color: #252526;
                 }
                 #input {
                     flex: 1;
-                    padding: 10px;
+                    padding: 6px;
                     border: none;
-                    border-radius: 5px;
+                    border-radius: 10px;
                     background-color: #333;
                     color: #ffffff;
                 }
@@ -123,12 +131,12 @@ function getWebviewContent(): string {
                     background-color: #4CAF50;
                     color: white;
                     border: none;
-                    border-radius: 5px;
+                    border-radius: 10px;
                     cursor: pointer;
                 }
                 .markdown-body {
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-                    font-size: 16px;
+                    font-size: 12px;
                     line-height: 1.5;
                     word-wrap: break-word;
                 }
@@ -196,7 +204,7 @@ function getWebviewContent(): string {
                         chat.appendChild(aiMessageElement);
                     }
                     const markdownBody = aiMessageElement.querySelector('.markdown-body');
-                    markdownBody.textContent += text;
+                    markdownBody.innerHTML += text; // Use innerHTML to render markdown
                     chat.scrollTop = chat.scrollHeight; // Auto-scroll to the bottom
                 }
 
