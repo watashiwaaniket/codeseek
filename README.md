@@ -1,5 +1,5 @@
-# codeseek
-[codeseek repo](https://github.com/watashiwaaniket/codeseek)
+# codeseek-r1
+[codeseek-r1 repo](https://github.com/watashiwaaniket/codeseek)
 
 Your personal AI code reviewer and chatbot powered by deepseek-r1.
 *You will need ollama installed for utilizing this extension,
