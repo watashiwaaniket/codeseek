@@ -1,4 +1,5 @@
 # codeseek
+[codeseek repo](https://github.com/watashiwaaniket/codeseek)
 
 Your personal AI code reviewer and chatbot powered by deepseek-r1.
 *You will need ollama installed for utilizing this extension,
@@ -16,10 +17,10 @@ also the response time would vary depending on your hardware.*
 * SeekReview: Giving you code review of current active window and improvements to it (if any).
 
 *SeekReview*
-![seekReview](public/seekReview.png)
+![seekReview](https://github.com/watashiwaaniket/codeseek/blob/version-2/public/seekReview.png)
 
 *CodeSeek*
-![codeseek](public/codeSeek.png)
+![codeseek](https://github.com/watashiwaaniket/codeseek/blob/version-2/public/codeSeek.png)
 
 > Tip: If the response if very slow, you can just clone the repo and change the model according to your required params.
 
