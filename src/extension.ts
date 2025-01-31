@@ -1,33 +1,57 @@
 import * as vscode from 'vscode';
 import ollama from 'ollama';
 import { marked } from 'marked';
+import getWebviewContentForChat from './webViews/ChatWebView';
+import getWebviewContentForReview from './webViews/ReviewWebView';
 
 export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Congratulations, your extension "codeseek" is now active!');
 
-	const disposable = vscode.commands.registerCommand('codeseek.initiate',async () => {
-
-		const message = [{ 
-			role: 'user', 
-			content: 'how are you?' 
-		}]
-
-		const response = await ollama.chat({
-			model: 'deepseek-r1:7b',
-			messages: message
-		})
-
-		const answer = response.message.content;
-		console.log(answer)
-		//doing some string manipulation to clear out unnecessary text.
-		function removeBeforeThink(str: string){
-			return str.replace(/<think>[\s\S]*?<\/think>/, '').trim();
-		}
-
-
-		vscode.window.showInformationMessage(removeBeforeThink(answer));
+	const disposable = vscode.commands.registerCommand('codeseek.initiate', async () => {
+		// Create the WebView panel for the chat
+		const panel = vscode.window.createWebviewPanel(
+			'codeseek.chatPanel', // Panel ID
+			'Chat with AI', // Panel title
+			vscode.ViewColumn.Beside, // Display it on the right side
+			{ enableScripts: true, retainContextWhenHidden: true } // Enable scripts in WebView
+		);
+	
+		// Set the HTML content for the WebView (initial chat interface)
+		panel.webview.html = getWebviewContentForChat();
+	
+		// Handle sending a message from the WebView (via postMessage)
+		panel.webview.onDidReceiveMessage(async (message) => {
+			if (message.type === 'sendMessage') {
+				const userMessage = message.text;
+	
+				// Prepare the message to send to the LLM
+				const chatMessage = [
+					{ role: 'user', content: userMessage },
+					{ role: 'system', content: 'You are an AI assistant helping with various queries.' }
+				];
+	
+				// Send the message to the LLM
+				const response = await ollama.chat({
+					model: 'deepseek-r1:7b',
+					messages: chatMessage
+				});
+	
+				const answer = response.message.content;
+				const cleanedAnswer = removeBeforeThink(answer);
+	
+				// Parse the response with marked
+				const parsedResponse = marked.parse(cleanedAnswer);
+	
+				// Send the parsed response back to the WebView to display
+				panel.webview.postMessage({ type: 'displayResponse', html: parsedResponse });
+			}
+		});
 	});
+
+	function removeBeforeThink(str: string): string {
+		return str.replace(/<think>[\s\S]*?<\/think>/, '').trim();
+	}
 
 	//getting the content of the currently open file
 	function getActiveEditorContent(): string | undefined{
@@ -74,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         // Create a new WebView panel
         const panel = vscode.window.createWebviewPanel(
             'codeseek.reviewPanel', // Panel ID
-            'AI Code Review', // Panel title
+            'codeseek', // Panel title
             vscode.ViewColumn.Beside, // Show on the right side
             {
                 enableScripts: true, // Allow scripts in the WebView
@@ -82,39 +106,10 @@ export function activate(context: vscode.ExtensionContext) {
         );
 
         // Set the HTML content of the WebView
-        panel.webview.html = getWebviewContent(result);
+        panel.webview.html = getWebviewContentForReview(result);
     	});
 	});
 
-	// Function to get the WebView HTML content
-	function getWebviewContent(reviewContent: string): string {
-		return `
-		<html>
-		<head>
-			<title>Seek Review [Powered by deepseek-r1]</title>
-			<style>
-				body {
-					font-family: Arial, sans-serif;
-					margin: 20px;
-					color: #333;
-				}
-				.content {
-					background-color: #f4f4f4;
-					padding: 15px;
-					border-radius: 5px;
-					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-				}
-			</style>
-		</head>
-		<body>
-			<div class="content">
-				<h3>AI Code Review</h3>
-				<div>${reviewContent}</div>
-			</div>
-		</body>
-		</html>
-		`;
-	}
 
 	context.subscriptions.push(disposable, review);
 }
