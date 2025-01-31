@@ -9,10 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const message = [{ 
 			role: 'user', 
-			content: 'Why is the sky blue?' 
-		},{
-			role: 'system',
-			content: 'You are an AI coding assistant who will help the user with all their code related queries.'
+			content: 'how are you?' 
 		}]
 
 		const response = await ollama.chat({
@@ -21,9 +18,10 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 
 		const answer = response.message.content;
+		console.log(answer)
 		//doing some string manipulation to clear out unnecessary text.
 		function removeBeforeThink(str: string){
-			return str.replace(/.*<\/think>/, '').trim();
+			return str.replace(/<think>[\s\S]*?<\/think>/, '').trim();
 		}
 
 
