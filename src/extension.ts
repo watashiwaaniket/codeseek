@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// Create the WebView panel for the chat
 		const panel = vscode.window.createWebviewPanel(
 			'codeseek.chatPanel', // Panel ID
-			'Chat with AI', // Panel title
+			'codeseek', // Panel title
 			vscode.ViewColumn.Beside, // Display it on the right side
 			{ enableScripts: true, retainContextWhenHidden: true } // Enable scripts in WebView
 		);
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         // Create a new WebView panel
         const panel = vscode.window.createWebviewPanel(
             'codeseek.reviewPanel', // Panel ID
-            'codeseek', // Panel title
+            'seekreview', // Panel title
             vscode.ViewColumn.Beside, // Show on the right side
             {
                 enableScripts: true, // Allow scripts in the WebView
