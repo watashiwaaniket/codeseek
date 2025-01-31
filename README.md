@@ -1,71 +1,43 @@
-# codeseek README
+# codeseek
 
-This is the README for your extension "codeseek". After writing up a brief description, we recommend including the following sections.
+Your personal AI code reviewer and chatbot powered by deepseek-r1.
+*You will need ollama installed for utilizing this extension,
+also the response time would vary depending on your hardware.*
+
+**To use codeseek -**
+* First Ensure the extension is installed.
+* Then use command `ctrl + shift + p` to open the command palette.
+* Use command `CodeSeek` to open the chatbot.
+* Use command `SeekReview` to run code reviewer.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* CodeSeek : Deepseek-r1:7b powered chatbot  helping you out with your queries on the go!
+* SeekReview: Giving you code review of current active window and improvements to it (if any).
 
-For example if there is an image subfolder under your extension project workspace:
+*SeekReview*
+![seekReview](public/seekReview.png)
 
-\!\[feature X\]\(images/feature-x.png\)
+*CodeSeek*
+![codeseek](public/codeSeek.png)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Tip: If the response if very slow, you can just clone the repo and change the model according to your required params.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+You will need ollama up and running locally and also `deepseek-r1:7b` model installed.
 
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+*if not, then follow the below steps:*
+* Download Ollama from [here](https://ollama.com/) and install it.
+* Now that it's installed, run your terminal and type the command, `ollama run deepseek-r1:7b` this will pull the llm model onto your machine for first time run.
+* You can now use the extension!
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+As it's my first extension, there mmight be some issue, feel free to open them on the official repo and even contribute with any features you think might be needed in it.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of codeseek

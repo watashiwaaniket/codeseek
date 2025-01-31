@@ -1,8 +1,10 @@
 {
   "name": "codeseek",
   "displayName": "codeSeek",
+  "publisher": "Hisukurifu",
   "description": "AI based copilot using the power of deepseek-r1 locally!",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "repository": "https://github.com/watashiwaaniket/codeseek/tree/version-2",
   "engines": {
     "vscode": "^1.96.0"
   },
