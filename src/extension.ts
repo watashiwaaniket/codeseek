@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
             content: context
         }, {
             role: 'system',
-            content: 'You are an AI code reviewer, go through the content provided by the user and give your opinion on how well it is written in a small paragraph, less than 40 words'
+            content: 'You are an AI code reviewer, go through the content provided by the user and give your opinion on how well it is written and also any changes which can be done for enhancing performance. make sure the response is not more than 150words'
         }];
 
         // Wait for Ollama's response
@@ -71,10 +71,50 @@ export function activate(context: vscode.ExtensionContext) {
         }
 		const result = await marked.parse(removeBeforeThink(answer))
 
-        vscode.window.showInformationMessage(result);
+        // Create a new WebView panel
+        const panel = vscode.window.createWebviewPanel(
+            'codeseek.reviewPanel', // Panel ID
+            'AI Code Review', // Panel title
+            vscode.ViewColumn.Beside, // Show on the right side
+            {
+                enableScripts: true, // Allow scripts in the WebView
+            }
+        );
+
+        // Set the HTML content of the WebView
+        panel.webview.html = getWebviewContent(result);
     	});
 	});
 
+	// Function to get the WebView HTML content
+	function getWebviewContent(reviewContent: string): string {
+		return `
+		<html>
+		<head>
+			<title>Seek Review [Powered by deepseek-r1]</title>
+			<style>
+				body {
+					font-family: Arial, sans-serif;
+					margin: 20px;
+					color: #333;
+				}
+				.content {
+					background-color: #f4f4f4;
+					padding: 15px;
+					border-radius: 5px;
+					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+				}
+			</style>
+		</head>
+		<body>
+			<div class="content">
+				<h3>AI Code Review</h3>
+				<div>${reviewContent}</div>
+			</div>
+		</body>
+		</html>
+		`;
+	}
 
 	context.subscriptions.push(disposable, review);
 }
